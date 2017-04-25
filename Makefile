@@ -1,12 +1,14 @@
 BASE_DIR := $(shell pwd)
 
-# Find the backup-utils directory within $PATH pr $HOME
+# Find the backup-utils directory within $PATH or $HOME; uses xargs to
+# find full paths, and weed out any paths in $PATH that are not accessible.
 SEARCH_PATH := $(shell \
         echo $(PATH):$(HOME) | \
         tr ":" " " | \
         xargs readlink -f | \
         tr "\n" " " \
 )
+# Find the first instance of directory `backup-utils` within the search paths.
 GHE_UTILS := $(shell \
         find $(SEARCH_PATH) -maxdepth 3 -type d -name backup-utils -print -quit \
 )
@@ -19,6 +21,8 @@ $(info Checking for GitHub Enterprise Backup Utilities...)
 ifndef GHE_UTILS
 $(error "GitHub Enterprise Backup Utilities not found.")
 else
+# Need to get the full path here; doing so above, when no path is found would
+# cause an error.
 GHE_UTILS := $(shell readlink -f $(GHE_UTILS))
 $(info Found in $(GHE_UTILS).)
 endif
