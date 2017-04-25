@@ -18,7 +18,7 @@ Additionally, you will need to set up an incoming Webhook on your Slack instance
 ## Install
 
 ```
-$ git clone https://github.com/elliottcarlson/ghe-make-backup
+$ git clone https://git.generalassemb.ly/ghe-make-backup/ghe-make-backup
 $ cd ghe-make-backup
 $ make
 Checking for GitHub Enterprise Backup Utilities...
