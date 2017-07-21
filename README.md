@@ -1,4 +1,4 @@
-# ghe-make-backup 
+# ghe-make-backup
 
 A cronjob script to assist in performing nightly GitHub Enterprise backups,
 uploading of the backup snapshot to AWS S3, and notify a Slack channel on the
@@ -29,6 +29,8 @@ Enter the Slack Webhook URL that will receive Slack messages.
 Slack Webhook URL: https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXX
 Enter the Slack Channel to send messages to.
 Slack Channel: #ghe-ops
+Enter the DMS Snitch to use.
+DMS Snitch URL: https://nosnch.in/XXXXXXXXX
 Enter the AWS S3 bucket name to save snapshots to.
 S3 Bucket: ga-ghe-backups
 Saving .config.

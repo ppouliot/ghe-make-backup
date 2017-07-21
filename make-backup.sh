@@ -13,8 +13,14 @@ source $DIR/.config
 ## Import the _send_to_slack function
 source $DIR/send-to-slack.sh
 
+## Import the _notify_dms function
+source $DIR/notify-dms.sh
+
 ## Get the last snapshot ID
 CUR_SNAPSHOT_ID=$(readlink ${UTILS_DIR}/data/current)
+
+## Notify DMS at start of backup attempt
+_notify_dms
 
 ## Run ghe-backup
 ${UTILS_DIR}/bin/ghe-backup -v 1>>${UTILS_DIR}/backup.log 2>&1
@@ -38,8 +44,5 @@ aws s3 cp "$SNAPSHOT_ID.tar.gz" s3://${S3_BUCKET}
 
 ## Delete the tarball to free up space
 rm -rf "$SNAPSHOT_ID.tar.gz"
-
-## Notify Slack of completion of backup
-_send_to_slack "GitHub Enterprise Backup ${SNAPSHOT_ID} completed."
 
 exit 0
