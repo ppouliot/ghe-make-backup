@@ -17,7 +17,7 @@ source $DIR/send-to-slack.sh
 source $DIR/notify-dms.sh
 
 ## Get the last snapshot ID
-CUR_SNAPSHOT_ID=$(readlink ${UTILS_DIR}/data/current)
+CUR_SNAPSHOT_ID=$(readlink ${DATA_DIR}/current)
 
 ## Notify DMS at start of backup attempt
 _notify_dms
@@ -26,7 +26,7 @@ _notify_dms
 ${UTILS_DIR}/bin/ghe-backup -v 1>>${UTILS_DIR}/backup.log 2>&1
 
 ## Get the new snapshot ID
-SNAPSHOT_ID=$(readlink ${UTILS_DIR}/data/current)
+SNAPSHOT_ID=$(readlink ${DATA_DIR}/current)
 
 ## Check if the snapshot ID was updated
 if [ $CUR_SNAPSHOT_ID == $SNAPSHOT_ID ]; then
@@ -36,7 +36,7 @@ if [ $CUR_SNAPSHOT_ID == $SNAPSHOT_ID ]; then
 fi
 
 ## Create a tarball of the snapshot
-cd ${UTILS_DIR}/data
+cd ${DATA_DIR}
 tar -czf "${SNAPSHOT_ID}.tar.gz" "${SNAPSHOT_ID}"
 
 ## Upload snapshot tarball to S3

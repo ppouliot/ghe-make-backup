@@ -34,20 +34,25 @@ endif
 
 config:
 	@while [ -z "$$SLACK_WEBHOOK" ]; do \
-                echo Enter the Slack Webhook URL that will receive Slack messages.; \
+                echo "Enter the Slack Webhook URL that will receive Slack messages."; \
                 read -r -p "Slack Webhook URL: " SLACK_WEBHOOK; \
         done && \
         while [ -z "$$SLACK_CHANNEL" ]; do \
-                echo Enter the Slack Channel to send messages to.; \
+                echo "Enter the Slack Channel to send messages to."; \
                 read -r -p "Slack Channel: " SLACK_CHANNEL; \
         done && \
         while [ -z "$$DMS_WEBHOOK" ]; do \
-                echo Enter the DMS Snitch to use.; \
+                echo "Enter the DMS Snitch to use."; \
                 read -r -p "DMS Snitch URL: " DMS_WEBHOOK; \
         done && \
         while [ -z "$$S3_BUCKET" ]; do \
-                echo Enter the AWS S3 bucket name to save snapshots to.; \
+                echo "Enter the AWS S3 bucket name to save snapshots to."; \
                 read -r -p "S3 Bucket: " S3_BUCKET; \
+        done && \
+        while [ -z "$$DATA_DIR" ]; do \
+                echo "Enter the directory to store local backups in."; \
+                read -r -p "Data Directory (default: ${GHE_UTILS}/data): " DATA_DIR; \
+                : $${DATA_DIR:=$GHE_UTILS/data}; \
         done && \
         ( \
                 echo Saving .config.; \
@@ -55,6 +60,7 @@ config:
                 echo SLACK_CHANNEL=$$SLACK_CHANNEL >> $(BASE_DIR)/.config; \
                 echo DMS_WEBHOOK=$$DMS_WEBHOOK >> $(BASE_DIR)/.config; \
                 echo UTILS_DIR=$(GHE_UTILS) >> $(BASE_DIR)/.config; \
+                echo DATA_DIR=$$DATA_DIR >> $(BASE_DIR)/.config; \
                 echo S3_BUCKET=$$S3_BUCKET >> $(BASE_DIR)/.config; \
         )
 
